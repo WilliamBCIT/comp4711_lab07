@@ -10,21 +10,28 @@ class Server extends Controller
 		
         }
 		
-		public function response(){
+		public function handle_response($response){
 			
-		$code   = $response->getStatusCode();    // 200
-		$reason = $response->getReason();      // OK
-		$body = $response->getBody();
+			$code   = $response->getStatusCode();    // 200
+			$reason = $response->getReason();      // OK
 
-			if (strpos($response->getHeader('content-type'), 'application/json') !== false)
+			echo $response->getHeaderLine('Content-Type');
+			
+			foreach ($response->getHeaders() as $name => $value)
 			{
-				$body = json_decode($body);
-			}		
+					echo $name .': '. $response->getHeaderLine($name) ."\n";
+			}
+		
+			if (strpos($response->getHeader('content-type'), 'application/x-www-form-urlencoded') !== false)
+			{
 
+					$body = $response->getBody();
+		
+					return $this->response->setBody($body);
+
+			}					
+		
 		
 		}
-		
-		
-		
 		
 		}

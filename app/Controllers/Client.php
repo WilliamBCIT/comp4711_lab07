@@ -8,6 +8,9 @@ class Client extends Controller
         public function index()
         {
 			
+		    submit_form();	
+			echo ('Form submitted');
+			
         }
 
 		
@@ -15,7 +18,7 @@ class Client extends Controller
 			
 			$client = \Config\Services::curlrequest();	
 			
-			$client->request('POST', '/post', [
+			$new_response = $client->request('POST', '/post', [
 					'form_params' => [
 					'name' => 'Bob Jones',
 					'email' => 'Bob@PersonalTrainerBob.com',
@@ -24,7 +27,9 @@ class Client extends Controller
 			]
 		]);			
 		
+			$server = new Server;
+		    $server->handle_response($new_response);
+		
 		}
-
 		
 		}
