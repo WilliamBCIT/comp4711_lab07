@@ -10,6 +10,20 @@ class Server extends Controller
 		
         }
 		
+		public function work(){
+			
+		
+			if (strpos($response->getHeader('content-type'), 'application/x-www-form-urlencoded') !== false)
+				{
+
+					$body = $response->getBody();
+		
+					return $this->response->setBody($body);
+
+				}			
+			
+		}
+		
 		public function handle_response($response){
 			
 			$code   = $response->getStatusCode();    // 200
@@ -21,16 +35,6 @@ class Server extends Controller
 			{
 					echo $name .': '. $response->getHeaderLine($name) ."\n";
 			}
-		
-			if (strpos($response->getHeader('content-type'), 'application/x-www-form-urlencoded') !== false)
-			{
-
-					$body = $response->getBody();
-		
-					return $this->response->setBody($body);
-
-			}					
-		
 		
 		}
 		
